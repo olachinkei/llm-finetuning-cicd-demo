@@ -9,7 +9,12 @@ os.environ["WANDB_PROJECT"] = "Autocompletion with evaluation"
 os.environ["WANDB_USERNAME"] = "keisuke-kamata"
 
 tokenizer = AutoTokenizer.from_pretrained("facebook/opt-125m")
-data = load_dataset("databricks-dolly-15k")
+data = load_dataset("databricks-dolly-15k",split="train")
+
+
+
+
+
 data = data.map(lambda samples: tokenizer(samples['text']), batched=True)
 
 INITIAL_UPLOAD_DATE = "20230826"

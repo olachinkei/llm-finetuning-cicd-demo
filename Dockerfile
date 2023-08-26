@@ -13,5 +13,3 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY fine_tuning.py /root/src
 COPY data_preparation.py /root/src
 COPY model_evaluation.py /root/src
-
-

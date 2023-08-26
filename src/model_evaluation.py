@@ -91,6 +91,7 @@ def get_latency_df(prompts, num_prompts, ft_path, ct2_path):
 
 
 with wandb.init(job_type="model_evaluation") as run:
+    # evaluation each by each
     staging_model = wandb.use_artifact(f'{os.environ["WANDB_ENTITY"]}/model-registry/{MODEL_NAME}:staging')
     staging_path = staging_model.download()
 
@@ -103,6 +104,11 @@ with wandb.init(job_type="model_evaluation") as run:
     test_files = glob.glob(f"{instruction_dir}/test/*.parquet")
     test_data = pd.concat([pd.read_parquet(path) for path in test_files])
     prompts = test_data.sample(frac=1)["text"][:10]
+
+    # evaluation to 
+
+
+
 
     wandb.log({
         EVALUATION_TABLE_NAME: get_model_comparison_df(prompts, ft_path=staging_path, ct2_path=staging_path_ct2),
