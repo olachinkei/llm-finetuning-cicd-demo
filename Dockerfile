@@ -1,9 +1,8 @@
 FROM nvidia/cuda:12.2.0-runtime-ubuntu22.04
 WORKDIR /app
 COPY requirements.txt .
-COPY src/japanese-task-evaluation.py ./
-COPY src/utils.py ./
-COPY src/prompt_template.py ./
+COPY fine_tuning.py ./
+COPY data_preparation.py ./
 
 RUN pip install --upgrade pip
 RUN pip install --upgrade setuptools
