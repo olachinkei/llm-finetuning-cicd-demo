@@ -7,6 +7,6 @@ ctranslate2
 datasets>=2.14.4
 scipy
 wandb>=0.15.8
-lm-eval=0.3.0
+lm-eval==0.3.0
 torch=2.0.1
-jupyterlab=4.0.5
+jupyterlab==4.0.5
