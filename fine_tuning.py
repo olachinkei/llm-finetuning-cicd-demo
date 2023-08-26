@@ -15,7 +15,7 @@ os.environ["WANDB_PROJECT"] = "Autocompletion_evaluation"
 os.environ["WANDB_USERNAME"] = "keisuke-kamata"
 os.environ["WANDB_LOG_MODEL"] = "checkpoint"
 os.environ["WANDB_WATCH"] = "gradients"
-MODEL_NAME = "Finetuned-opt-125m-dolly"
+MODEL_NAME = "Finetuned-opt-125m"
 BASE_MODEL = "facebook/opt-125m"
 
 
@@ -53,12 +53,12 @@ model = AutoModelForCausalLM.from_pretrained(
 )
 
 # Prepare data
-reviews_artifact = run.use_artifact(f'{os.environ["WANDB_ENTITY"]}/{os.environ["WANDB_PROJECT"]}/reviews:{wandb.config.dataset_version}')
-reviews_dir = reviews_artifact.download()
+instruction_artifact = run.use_artifact(f'{os.environ["WANDB_ENTITY"]}/{os.environ["WANDB_PROJECT"]}/instruction:{wandb.config.dataset_version}')
+instruction_dir = instruction_artifact.download()
 
-train_files = glob.glob(f"{reviews_dir}/train/*.parquet")
+train_files = glob.glob(f"{instruction_dir}/train/*.parquet")
 train_data_df = pd.concat([pd.read_parquet(path) for path in train_files])
-valid_files = glob.glob(f"{reviews_dir}/valid/*.parquet")
+valid_files = glob.glob(f"{instruction_dir}/valid/*.parquet")
 valid_data_df = pd.concat([pd.read_parquet(path) for path in valid_files])
 
 def pad_or_truncate_sequences(sequences, max_length):
@@ -155,8 +155,6 @@ def convert_qlora2ct2(adapter_path,
     return ct2_path
 
 
-"""
-Link to model registry
 with wandb.init() as run:
     api = wandb.Api()
     runs = api.runs()
@@ -171,10 +169,9 @@ with wandb.init() as run:
     best_model_ft = wandb.Artifact(f"model-{run_with_best_model}-ft", type="model")
     best_model_ft.add_dir("opt125m-finetuned")
     run.log_artifact(best_model_ft)
-    run.link_artifact(best_model_ft, f'{os.environ["WANDB_ENTITY"]}/model-registry/{MODEL_NAME}', aliases=['staging'])
+    #run.link_artifact(best_model_ft, f'{os.environ["WANDB_ENTITY"]}/model-registry/{MODEL_NAME}', aliases=['staging'])
 
     best_model_ct2 = wandb.Artifact(f"model-{run_with_best_model}-ct2", type="model")
     best_model_ct2.add_dir(ct2_model_dir)
     run.log_artifact(best_model_ct2)
-    run.link_artifact(best_model_ct2, f'{os.environ["WANDB_ENTITY"]}/model-registry/{MODEL_NAME}', aliases=['staging-ct2'])
-"""
+    #run.link_artifact(best_model_ct2, f'{os.environ["WANDB_ENTITY"]}/model-registry/{MODEL_NAME}', aliases=['staging-ct2'])

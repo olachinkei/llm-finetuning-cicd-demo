@@ -1,11 +1,13 @@
 FROM nvidia/cuda:12.2.0-runtime-ubuntu22.04
-WORKDIR /app
-COPY requirements.txt .
-COPY fine_tuning.py ./
-COPY data_preparation.py ./
+USER root
+
+RUN mkdir -p /root/src
+COPY requirements.txt /root/src
+COPY fine_tuning.py /root/src
+COPY data_preparation.py /root/src
+COPY model_evaluation.py /root/src
+WORKDIR /root/src
 
 RUN pip install --upgrade pip
 RUN pip install --upgrade setuptools
 RUN pip install --no-cache-dir -r requirements.txt
-
-ENTRYPOINT ["python", "japanese-task-evaluation.py"]
