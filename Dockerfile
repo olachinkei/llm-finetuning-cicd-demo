@@ -12,3 +12,6 @@ RUN apt-get update && apt-get install -y python3-pip
 RUN pip install --upgrade pip
 RUN pip install --upgrade setuptools
 RUN pip install --no-cache-dir -r requirements.txt
+RUN git clone https://github.com/EleutherAI/lm-evaluation-harness && \
+    cd lm-evaluation-harness && \
+    pip install -e .
