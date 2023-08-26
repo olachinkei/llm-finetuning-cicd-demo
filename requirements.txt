@@ -7,3 +7,4 @@ git+https://github.com/huggingface/peft.git
 wandb
 ctranslate2
 scipy
+lm-eval=0.3.0
