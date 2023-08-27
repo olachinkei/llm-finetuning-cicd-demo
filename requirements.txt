@@ -1,7 +1,6 @@
 bitsandbytes
 accelerate
 loralib
-git+https://github.com/huggingface/transformers.git@main
 git+https://github.com/huggingface/peft.git
 ctranslate2
 datasets>=2.14.4
