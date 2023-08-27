@@ -4,6 +4,7 @@ services:
     build: .
     image: olachinkei/llm-finetuning-cicd
     container_name: llm-finetuning-cicd
+    runtime: nvidia
     deploy:
       resources:
         reservations:
