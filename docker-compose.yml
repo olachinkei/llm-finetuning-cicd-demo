@@ -15,7 +15,7 @@ services:
     command:
       jupyter-lab --ip 0.0.0.0 --allow-root -b localhost
   cuda:
-    image: nvidia/cuda:12.2.0-runtime-ubuntu22.04
+    image: olachinkei/llm-finetuning-cicd
     command: nvidia-smi
     deploy:
       resources:
