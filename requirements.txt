@@ -10,4 +10,4 @@ lm-eval==0.3.0
 torch==2.0.1
 jupyterlab==4.0.5
 transformers==4.32.0
-lme==0.4
+lm-eval==0.3.0
