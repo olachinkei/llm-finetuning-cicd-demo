@@ -1,1 +1,0 @@
-{"columns": ["Model", "Latency for 10 Reviews"], "data": [["Original", 0.26979067642241716], ["Staging (finetuned)", 0.26950595900416374], ["Production (finetuned)", 0.267526526004076]]}
