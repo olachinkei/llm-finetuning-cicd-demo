@@ -1,0 +1,199 @@
+{
+    "os": "Linux-5.19.0-42-generic-x86_64-with-glibc2.35",
+    "python": "3.10.12",
+    "heartbeatAt": "2023-08-29T10:51:28.484125",
+    "startedAt": "2023-08-29T10:51:27.407201",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/work/fine_tuning.py",
+    "codePath": "fine_tuning.py",
+    "host": "bcdb126ee41d",
+    "username": "keisuke-kamata",
+    "executable": "/usr/bin/python3",
+    "cpu_count": 24,
+    "cpu_count_logical": 32,
+    "cpu_freq": {
+        "current": 1887.4023124999999,
+        "min": 800.0,
+        "max": 4787.5
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 1707.096,
+            "min": 800.0,
+            "max": 5300.0
+        },
+        {
+            "current": 2000.0,
+            "min": 800.0,
+            "max": 5300.0
+        },
+        {
+            "current": 1707.446,
+            "min": 800.0,
+            "max": 5300.0
+        },
+        {
+            "current": 2000.0,
+            "min": 800.0,
+            "max": 5300.0
+        },
+        {
+            "current": 1740.054,
+            "min": 800.0,
+            "max": 5300.0
+        },
+        {
+            "current": 2000.0,
+            "min": 800.0,
+            "max": 5300.0
+        },
+        {
+            "current": 1746.368,
+            "min": 800.0,
+            "max": 5300.0
+        },
+        {
+            "current": 2000.0,
+            "min": 800.0,
+            "max": 5300.0
+        },
+        {
+            "current": 1700.0,
+            "min": 800.0,
+            "max": 5600.0
+        },
+        {
+            "current": 2000.0,
+            "min": 800.0,
+            "max": 5600.0
+        },
+        {
+            "current": 1999.572,
+            "min": 800.0,
+            "max": 5600.0
+        },
+        {
+            "current": 1629.608,
+            "min": 800.0,
+            "max": 5600.0
+        },
+        {
+            "current": 2000.0,
+            "min": 800.0,
+            "max": 5300.0
+        },
+        {
+            "current": 2103.571,
+            "min": 800.0,
+            "max": 5300.0
+        },
+        {
+            "current": 2000.0,
+            "min": 800.0,
+            "max": 5300.0
+        },
+        {
+            "current": 2000.0,
+            "min": 800.0,
+            "max": 5300.0
+        },
+        {
+            "current": 2000.0,
+            "min": 800.0,
+            "max": 4200.0
+        },
+        {
+            "current": 2000.0,
+            "min": 800.0,
+            "max": 4200.0
+        },
+        {
+            "current": 2000.0,
+            "min": 800.0,
+            "max": 4200.0
+        },
+        {
+            "current": 2000.0,
+            "min": 800.0,
+            "max": 4200.0
+        },
+        {
+            "current": 2000.0,
+            "min": 800.0,
+            "max": 4200.0
+        },
+        {
+            "current": 2000.0,
+            "min": 800.0,
+            "max": 4200.0
+        },
+        {
+            "current": 2000.0,
+            "min": 800.0,
+            "max": 4200.0
+        },
+        {
+            "current": 2000.0,
+            "min": 800.0,
+            "max": 4200.0
+        },
+        {
+            "current": 800.015,
+            "min": 800.0,
+            "max": 4200.0
+        },
+        {
+            "current": 2000.0,
+            "min": 800.0,
+            "max": 4200.0
+        },
+        {
+            "current": 2000.0,
+            "min": 800.0,
+            "max": 4200.0
+        },
+        {
+            "current": 2000.0,
+            "min": 800.0,
+            "max": 4200.0
+        },
+        {
+            "current": 2000.0,
+            "min": 800.0,
+            "max": 4200.0
+        },
+        {
+            "current": 2000.0,
+            "min": 800.0,
+            "max": 4200.0
+        },
+        {
+            "current": 2000.0,
+            "min": 800.0,
+            "max": 4200.0
+        },
+        {
+            "current": 2000.0,
+            "min": 800.0,
+            "max": 4200.0
+        }
+    ],
+    "disk": {
+        "total": 915.3232879638672,
+        "used": 368.01753997802734
+    },
+    "gpu": "NVIDIA GeForce RTX 4090",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce RTX 4090",
+            "memory_total": 25757220864
+        }
+    ],
+    "memory": {
+        "total": 62.56858825683594
+    }
+}
