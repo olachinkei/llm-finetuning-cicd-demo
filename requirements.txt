@@ -1,7 +1,7 @@
 bitsandbytes
 accelerate
 loralib
-git+https://github.com/huggingface/peft.git
+peft==0.5.0
 git+https://github.com/EleutherAI/lm-evaluation-harness.git
 ctranslate2
 datasets>=2.14.4
