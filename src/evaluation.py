@@ -1,16 +1,3 @@
-"""
-import subprocess
-def execute_command(command):
-    result = subprocess.run(command, capture_output=True, text=True, shell=True)
-    if result.returncode != 0:
-        print(f"Error executing command: {' '.join(command)}")
-        print(result.stderr)
-    else:
-        print(result.stdout)
-#execute_command("git clone https://github.com/EleutherAI/lm-evaluation-harness")
-#execute_command("pip install -e ./lm-evaluation-harness/. -qqq")
-execute_command("pip install lm-eval==0.3.0 -qqq")
-"""
 
 import ctranslate2
 import glob
@@ -140,7 +127,7 @@ with wandb.init(config=config,job_type="model_evaluation") as run:
     # evaluation harness -------------------------------
     
     tasks = ["arc_easy","hellaswag","drop","sciq","squad2"]
-    results = lm_eval.evaluator.simple_evaluate(
+    results = evaluator.simple_evaluate(
         model=staging_model,
         tasks=tasks,
         batch_size=32,
