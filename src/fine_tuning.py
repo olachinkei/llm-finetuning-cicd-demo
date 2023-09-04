@@ -153,7 +153,7 @@ with wandb.init(config=config, job_type="training") as run:
     # Setup for LoRa
     config = wandb.config
     tokenizer = AutoTokenizer.from_pretrained(config.BASE_MODEL)
-    artifact = run.use_artifact('reviewco/Autocompletion with evaluation/data:v2', type='dataset')
+    artifact = run.use_artifact('reviewco/Autocompletion with evaluation/data:production', type='dataset')
     artifact_dir = artifact.download()
     train_data = load_dataset('json', data_files=artifact_dir+'/train_data.json',split="train")
     valid_data = load_dataset('json', data_files=artifact_dir+'/valid_data.json',split="train")
