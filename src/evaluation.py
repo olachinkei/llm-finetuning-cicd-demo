@@ -50,9 +50,9 @@ config = {
 
 def get_completion_responses_batch(prompts, base_llm,production_path, staging_path, tokenizer):
     # Get completions for each model in batches
-    original_completions = get_huggingface_completion_batch_base(prompts, config,tokenizer)
-    stagaing_completions = get_huggingface_completion_batch_sta(prompts, staging_path, tokenizer)
-    production_completions = get_huggingface_completion_batch_pro(prompts, production_path, tokenizer)
+    original_completions = get_huggingface_completion_batch_base(prompts, config, tokenizer)
+    stagaing_completions = get_huggingface_completion_batch(prompts, staging_path, tokenizer)
+    production_completions = get_huggingface_completion_batch(prompts, production_path, tokenizer)
     responses = []
     for ori, sta, pro in zip(original_completions, stagaing_completions, production_completions):
         responses.append({
@@ -65,28 +65,18 @@ def get_completion_responses_batch(prompts, base_llm,production_path, staging_pa
     return df
 
 def get_huggingface_completion_batch_base(prompts,config, tokenizer):
-    generator = pipeline('text-generation', model=config.BASE_MODEL, tokenizer=tokenizer)
-    responses = generator(prompts, max_new_tokens=50)
-    completions = generate_output(responses, prompts)
+    completions = generate_output(config.BASE_MODEL,tokenizer,prompts)
     return completions
     
-def get_huggingface_completion_batch_sta(prompts, staging_path, tokenizer):
-    staging_model = PeftModel.from_pretrained(base_llm, staging_path,torch_dtype=torch.float16)
-    staging_model = staging_model.merge_and_unload()
-    generator = pipeline('text-generation', model=staging_model, tokenizer=tokenizer)
-    responses = generator(prompts, max_new_tokens=50)
-    completions = generate_output(responses, prompts)
+def get_huggingface_completion_batch(prompts, staging_path, tokenizer):
+    model = PeftModel.from_pretrained(base_llm, staging_path,torch_dtype=torch.float16)
+    model = model.merge_and_unload()
+    completions = generate_output(model,tokenizer,prompts)
     return completions
 
-def get_huggingface_completion_batch_pro(prompts, production_path, tokenizer):
-    production_model = PeftModel.from_pretrained(base_llm, production_path,torch_dtype=torch.float16)
-    production_model = production_model.merge_and_unload()
-    generator = pipeline('text-generation', model=production_model, tokenizer=tokenizer)
+def generate_output(model,tokenizer,prompts):
+    generator = pipeline('text-generation', model=model, tokenizer=tokenizer)
     responses = generator(prompts, max_new_tokens=50)
-    completions = generate_output(responses, prompts)
-    return completions
-
-def generate_output(responses, prompts):
     completions = []
     for i, prompt in enumerate(prompts):
         full_output = responses[i][0]["generated_text"]
@@ -94,19 +84,6 @@ def generate_output(responses, prompts):
         completions.append(output.strip())
     return completions
 
-
-"""
-def get_latency_df(prompts, num_prompts, base_llm, production_model, staging_model, tokenizer):
-  prompts = prompts[:num_prompts]
-  original_time = timeit.timeit(lambda: get_huggingface_completion_batch_base(prompts, base_llm, tokenizer), number=1)
-  production_time = timeit.timeit(lambda: get_huggingface_completion_batch_sta(prompts, production_path, tokenizer), number=1)
-  staging_time = timeit.timeit(lambda: get_huggingface_completion_batch_pro(prompts, staging_path,tokenizer), number=1)
-
-  return pd.DataFrame({
-    "Model": ["Original","Staging (finetuned)","Production (finetuned)"],
-    f"Latency for {num_prompts} Reviews": [original_time, production_time,staging_time],
-  })
-"""
 
 with wandb.init(config=config,job_type="model_evaluation") as run:
     config = wandb.config
@@ -121,8 +98,6 @@ with wandb.init(config=config,job_type="model_evaluation") as run:
     ## production model
     production_ar = wandb.use_artifact(f'{os.environ["WANDB_ENTITY"]}/model-registry/{config.MODEL_REGISTRY}:production')
     production_path = production_ar.download()
-    #production_model = PeftModel.from_pretrained(base_llm, production_path,torch_dtype=torch.float16)
-    #production_model = production_model.merge_and_unload()
     
     # evaluation harness -------------------------------
     
@@ -161,7 +136,6 @@ with wandb.init(config=config,job_type="model_evaluation") as run:
     run.log({
         "Evaluation metric": table,
         "Validation Responses": get_completion_responses_batch(prompts, config.BASE_MODEL, production_path, staging_path, tokenizer)
-        #"Model Latencies": get_latency_df(prompts, 10, config.BASE_MODEL, production_path, staging_path, tokenizer)
     })
     run.log_code()
 
@@ -230,16 +204,6 @@ with wandb.init(config=config,job_type="model_evaluation") as run:
         ])
 
     report.blocks += [wr.H1("Evaluation metric"), pg]
-    """
-    pg = wr.PanelGrid(
-        runsets=runsets,
-        panels=[
-            wr.WeavePanelSummaryTable("Model Latencies", layout={'w': 24, 'h': 12}),
-        ])
-
-    report.blocks += [wr.H1("Latency Data for Models"), pg]
-    """
-    
 
     pg = wr.PanelGrid(
         runsets=runsets,
